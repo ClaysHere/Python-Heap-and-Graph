@@ -1,4 +1,4 @@
-ef max_heapify(A, k):
+def max_heapify(A, k):
     l = 2 * k + 1
     r = 2 * k + 2
 
@@ -13,7 +13,7 @@ ef max_heapify(A, k):
         max_heapify(A, largest)
 
 def max_heap(A):
-    n = (len(A)//2)-1
+    n = int((len(A)//2)-1)
     for k in range(n, -1, -1):
         max_heapify(A, k)
 
@@ -32,44 +32,50 @@ def min_heapify(A, k):
         min_heapify(A, smallest)
 
 def min_heap(A):
-    n = (len(A)//2)-1
+    n = int((len(A)//2)-1)
     for k in range(n, -1, -1):
         min_heapify(A, k)
 
-def insert(list,data):
-    list.append(data)
-    return list
+def deleteMax(arr,data):
+    size = len(arr)
+    i = 0
+    
+    for i in range(0, size):
+        if data == arr[i]:
+            break
+    arr[i], arr[size-1] = arr[size-1], arr[i]
+    arr.remove(data)
 
-def delete(list,data):
-    indeks = 0
-    if data in list:
-        for i in list:
-            if data == i:
-                break
-            else:
-                indeks += 1
-                continue
+    for i in range((len(arr)//2)-1,-1,-1):
+        max_heapify(arr,i)
 
-        list[indeks] = list[-1]
-        list.pop(-1)
-        return list
-    else:
-        print('Data tidak ditemukan')
+def deleteMin(arr,data):
+    size = len(arr)
+    i = 0
+    
+    for i in range(0, size):
+        if data == arr[i]:
+            break
+    arr[i], arr[size-1] = arr[size-1], arr[i]
+    arr.remove(data)
 
+    for i in range((len(arr)//2)-1,-1,-1):
+        min_heapify(arr,i)
 
-def insert_max(list):
+def insert_max(arr):
     print('Masukkan data ke dalam heap')
     print('='*40)
     n = int(input('Jumlah data = '))
     for i in range(n):
         temp = int(input(f'Input data ke-{i+1} = '))
-        insert(list,temp)
-        max_heap(list)
-    print(f'Heap = {list}')
+        arr.append(temp)
+        arr.sort()
+    max_heap(arr)
+    print(f'Heap = {arr}')
     print()
-    max(list)
+    fiturMax(arr)
 
-def max(list):
+def fiturMax(arr):
     print('Fitur Max Heap')
     print('='*40)
     print('1. Insert Data')
@@ -78,40 +84,40 @@ def max(list):
     choose = int(input('Masukkan pilihan fitur Max Heap (1-3) = '))
     print()
     if choose == 1:
-        insert_max(list)
+        insert_max(arr)
     elif choose == 2:
         hapus = int(input('Data yang akan dihapus = '))
-        if hapus in list:
+        if hapus in arr:
             print(f'Data {hapus} telah dihapus')
-            delete(list,hapus)
-            max_heap(list)
-            print(f'Heap = {list}')
+            deleteMax(arr,hapus)
+            print(f'Heap = {arr}')
             print()
         else:
             print('Data tidak ditemukan')
             print()
-        max(list)
+        fiturMax(arr)
     elif choose == 3:
-        fitur(list)
+        fitur(arr)
         print()
     else:
         print('Kode yang anda masukkan salah')
         print()
-        max(list)
+        fiturMax(arr)
 
-def insert_min(list):
+def insert_min(arr):
     print('Masukkan data ke dalam heap')
     print('='*40)
     n = int(input('Jumlah data = '))
     for i in range(n):
         temp = int(input(f'Input data ke-{i+1} = '))
-        insert(list,temp)
-        min_heap(list)
-    print(f'Heap = {list}')
+        arr.append(temp)
+        arr.sort()
+    min_heap(arr)
+    print(f'Heap = {arr}')
     print()
-    min(list)
+    fiturMin(arr)
 
-def min(list):
+def fiturMin(arr):
     print('Fitur Min Heap')
     print('='*40)
     print('1. Insert Data')
@@ -120,28 +126,27 @@ def min(list):
     choose = int(input('Masukkan pilihan fitur Min Heap (1-3) = '))
     print()
     if choose == 1:
-        insert_min(list)
+        insert_min(arr)
     elif choose == 2:
         hapus = int(input('Data yang akan dihapus = '))
-        if hapus in list:
+        if hapus in arr:
             print(f'Data {hapus} telah dihapus')
-            delete(list,hapus)
-            min_heap(list)
-            print(f'Heap = {list}')
+            deleteMin(arr,hapus)
+            print(f'Heap = {arr}')
             print()
         else:
             print('Data tidak ditemukan')
             print()
-        min(list)
+        fiturMin(arr)
     elif choose == 3:
-        fitur(list)
+        fitur(arr)
         print()
     else:
         print('Kode yang anda masukkan salah')
         print()
-        min(list)
+        min(arr)
 
-def fitur(list):
+def fitur(arr):
     print('Welcome to Program Heap')
     print('='*40)
     print('1. Create Max Heap')
@@ -150,21 +155,21 @@ def fitur(list):
     choose = int(input('Masukkan pilihan fitur (1-3) = '))
     print()
     if choose == 1:
-        if len(list) == 0:
-            insert_max(list)
+        if len(arr) == 0:
+            insert_max(arr)
         else:
-            max(list)
+            fiturMax(arr)
     elif choose == 2:
-        if len(list) == 0:
-            insert_min(list)
+        if len(arr) == 0:
+            insert_min(arr)
         else:
-            min(list)
+            fiturMin(arr)
     elif choose == 3:
         print('Terima kasih telah menggunakan program Heap')
     else:
         print('Kode yang anda masukkan salah')
         print()
-        fitur(list)
+        fitur(arr)
 
 listnya = []
 
